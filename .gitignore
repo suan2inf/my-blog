@@ -1,0 +1,32 @@
+# 学习文档和配置
+学习/
+开发任务.md
+学习项目框架搭建提示词.md
+AGENTS.md
+.claude/
+
+# Python 虚拟环境
+Backend/venv/
+Backend/__pycache__/
+Backend/**/*.pyc
+Backend/.pytest_cache/
+
+# Node.js 依赖
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
