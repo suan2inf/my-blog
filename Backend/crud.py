@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from models import Article,Category
-from schemas import  ArticleCreate,ArticleUpdate
+from models import Article, Category, Project
+from schemas import ArticleCreate, ArticleUpdate, ProjectCreate, ProjectUpdate
 from sqlalchemy import or_
 
 #分类CRUD
@@ -71,6 +71,71 @@ def update_article(db:Session,article_id:int,article:ArticleUpdate):
     db.commit()
     db.refresh(db_article)
     return db_article
-    
 
-    
+
+# 作品 CRUD
+def get_projects(
+    db: Session,
+    skip: int = 0,
+    limit: int = 20,
+    tag: str = None,
+    featured: bool = None,
+    search: str = None
+):
+    query = db.query(Project)
+    if tag:
+        query = query.filter(Project.tags.contains(tag))
+    if featured is not None:
+        query = query.filter(Project.featured == featured)
+    if search:
+        search_pattern = f"%{search}%"
+        query = query.filter(
+            or_(
+                Project.title.ilike(search_pattern),
+                Project.description.ilike(search_pattern),
+                Project.content.ilike(search_pattern)
+            )
+        )
+    return query.order_by(Project.sort_order.desc(), Project.created_at.desc()).offset(skip).limit(limit).all()
+
+
+def get_project(db: Session, project_id: int):
+    return db.query(Project).filter(Project.id == project_id).first()
+
+
+def create_project(db: Session, project: ProjectCreate):
+    db_project = Project(
+        title=project.title,
+        description=project.description,
+        content=project.content,
+        image_url=project.image_url,
+        demo_url=project.demo_url,
+        github_url=project.github_url,
+        tags=project.tags,
+        featured=project.featured,
+        sort_order=project.sort_order
+    )
+    db.add(db_project)
+    db.commit()
+    db.refresh(db_project)
+    return db_project
+
+
+def update_project(db: Session, project_id: int, project: ProjectUpdate):
+    db_project = db.query(Project).filter(Project.id == project_id).first()
+    if not db_project:
+        return None
+    update_data = project.model_dump(exclude_unset=True)
+    for key, value in update_data.items():
+        setattr(db_project, key, value)
+    db.commit()
+    db.refresh(db_project)
+    return db_project
+
+
+def delete_project(db: Session, project_id: int):
+    db_project = db.query(Project).filter(Project.id == project_id).first()
+    if db_project:
+        db.delete(db_project)
+        db.commit()
+    return db_project

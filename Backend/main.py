@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # 导入路由
 from router.categories import router as categories_router
 from router.articles import router as articles_router
+from router.projects import router as projects_router
 
 app = FastAPI(title="个人博客 API")
 
@@ -21,6 +22,7 @@ app.add_middleware(
 # prefix 参数为空，因为路由已经在各自文件中定义了 prefix
 app.include_router(categories_router)
 app.include_router(articles_router)
+app.include_router(projects_router)
 
 @app.get("/")
 async def read_root():

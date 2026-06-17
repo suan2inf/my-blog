@@ -1,5 +1,5 @@
 from database import engine, Base
-from models import Category, Article  # 导入模型，确保被注册到 Base
+from models import Category, Article, Project  # 导入模型，确保被注册到 Base
 
 def init_database():
     """初始化数据库：创建所有表"""

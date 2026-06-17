@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from database import Base  # 从 database.py 导入 Base
@@ -42,3 +42,24 @@ class Article(Base):
     
     def __repr__(self):
         return f"<Article(id={self.id}, title='{self.title}')>"
+
+
+class Project(Base):
+    """作品/项目模型"""
+    __tablename__ = "projects"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(200), nullable=False, comment="项目名称")
+    description = Column(String(500), nullable=False, comment="简短描述（卡片展示）")
+    content = Column(Text, nullable=True, comment="详细内容（Markdown）")
+    image_url = Column(String(500), nullable=True, comment="封面图 URL")
+    demo_url = Column(String(500), nullable=True, comment="在线演示链接")
+    github_url = Column(String(500), nullable=True, comment="GitHub 仓库链接")
+    tags = Column(String(300), nullable=True, comment="标签（逗号分隔）")
+    featured = Column(Boolean, default=False, comment="是否精选（首页展示）")
+    sort_order = Column(Integer, default=0, comment="排序权重（越大越靠前）")
+    created_at = Column(DateTime, default=datetime.utcnow, comment="创建时间")
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, comment="更新时间")
+
+    def __repr__(self):
+        return f"<Project(id={self.id}, title='{self.title}')>"

@@ -2,30 +2,39 @@
   <div class="about">
     <h1>关于</h1>
 
+    <!-- 个人介绍 -->
     <section class="intro">
       <h2>关于我</h2>
-      <p>网名算不尽，目前某不知名双非二本数学系大一在读。喜欢技术，方向想往 AI Infra 走，正在努力。</p>
-      <p>平时写代码、做实验、踩坑。这个博客主要分享一些折腾过程中的经验心得和个人看法。内容会偏技术向，偶尔也可能聊聊学习方法和工具。</p>
-      <p>本人层次不高，不写教程，不讲大道理。只希望我趟过的坑，能帮诸位少走一段弯路。</p>
-      <p>欢迎交流，尽量直接。</p>
+      <p>我叫算不尽，这是我的个人博客网站，主做作品展示与经验分享，欢迎观看。</p>
     </section>
 
+    <!-- 联系方式 -->
     <section class="contact">
       <h2>联系方式</h2>
-      <ul>
-        <li><a href="https://github.com/suan2inf" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="mailto:3662927683@qq.com">Email</a></li>
-      </ul>
+      <div class="contact-cards">
+        <a href="https://github.com/suan2inf" target="_blank" class="contact-card">
+          <span class="contact-icon">GH</span>
+          <span class="contact-label">GitHub</span>
+          <span class="contact-value">@suan2inf</span>
+        </a>
+        <a href="mailto:3662927683@qq.com" class="contact-card">
+          <span class="contact-icon">@</span>
+          <span class="contact-label">Email</span>
+          <span class="contact-value">3662927683@qq.com</span>
+        </a>
+      </div>
     </section>
 
+    <!-- 关于本站 -->
     <section class="site-info">
       <div class="info-card">
         <h3>关于本站</h3>
         <ul>
-          <li>自建的个人博客，记录学习和踩坑过程</li>
+          <li>个人作品展示集 + 技术博客</li>
           <li>前端：Vue 3 + Vite</li>
           <li>后端：FastAPI + SQLAlchemy</li>
           <li>数据库：SQLite</li>
+          <li>部署：Docker + 阿里云 ECS</li>
         </ul>
       </div>
     </section>
@@ -42,9 +51,7 @@ h1 {
   margin-bottom: 36px;
 }
 
-.intro {
-  margin-bottom: 40px;
-}
+.intro { margin-bottom: 48px; }
 
 .intro h2 {
   font-size: 18px;
@@ -57,12 +64,10 @@ h1 {
   color: var(--text);
   margin-bottom: 14px;
   line-height: 1.85;
-  text-align: justify;
 }
 
-.contact {
-  margin-bottom: 40px;
-}
+/* 联系方式 */
+.contact { margin-bottom: 48px; }
 
 .contact h2 {
   font-size: 18px;
@@ -71,20 +76,55 @@ h1 {
   margin-bottom: 16px;
 }
 
-.contact ul {
-  list-style: none;
+.contact-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.contact-card {
   display: flex;
-  gap: 20px;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-.contact a {
+.contact-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--card-hover-shadow);
+}
+
+.contact-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius);
+  background: var(--accent-bg);
   color: var(--accent);
-  font-size: 15px;
-  transition: opacity 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  flex-shrink: 0;
 }
 
-.contact a:hover { opacity: 0.7; }
+.contact-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
 
+.contact-value {
+  font-size: 14px;
+  color: var(--text);
+  font-weight: 500;
+  word-break: break-all;
+}
+
+/* 关于本站 */
 .site-info {
   border-top: 1px solid var(--border);
   padding-top: 32px;
@@ -117,5 +157,9 @@ h1 {
 .info-card li::before {
   content: "— ";
   color: var(--paper-secondary);
+}
+
+@media (max-width: 767px) {
+  .contact-cards { grid-template-columns: 1fr; }
 }
 </style>
